@@ -1,0 +1,268 @@
+----GoblinRareApepeYC, constructor-----
+GoblinRareApepeYC.constructor.START_POINT -> EXPRESSION _status = _NOT_ENTERED
+----GoblinRareApepeYC, constructor-----
+GoblinRareApepeYC.constructor.START_POINT -> EXPRESSION _transferOwnership(_msgSender())
+----GoblinRareApepeYC, owner-----
+GoblinRareApepeYC.owner.START_POINT -> RETURN _owner
+----GoblinRareApepeYC, renounceOwnership-----
+GoblinRareApepeYC.renounceOwnership.START_POINT -> EXPRESSION onlyOwner()
+GoblinRareApepeYC.renounceOwnership.START_POINT -> EXPRESSION _transferOwnership(address(0))
+----GoblinRareApepeYC, transferOwnership-----
+GoblinRareApepeYC.transferOwnership.START_POINT -> EXPRESSION require(bool,string)(newOwner != address(0),Ownable: new owner is the zero address)
+GoblinRareApepeYC.transferOwnership.START_POINT -> EXPRESSION onlyOwner()
+GoblinRareApepeYC.transferOwnership.START_POINT -> EXPRESSION _transferOwnership(newOwner)
+----GoblinRareApepeYC, _transferOwnership-----
+GoblinRareApepeYC._transferOwnership.START_POINT -> EXPRESSION _owner = newOwner
+GoblinRareApepeYC._transferOwnership.START_POINT -> EXPRESSION OwnershipTransferred(oldOwner,newOwner)
+GoblinRareApepeYC._transferOwnership.START_POINT -> NEW VARIABLE oldOwner = _owner
+----GoblinRareApepeYC, _msgSender-----
+GoblinRareApepeYC._msgSender.START_POINT -> RETURN msg.sender
+----GoblinRareApepeYC, _msgData-----
+GoblinRareApepeYC._msgData.START_POINT -> RETURN msg.data
+----GoblinRareApepeYC, constructor-----
+GoblinRareApepeYC.constructor.START_POINT -> EXPRESSION _symbol = symbol_
+GoblinRareApepeYC.constructor.START_POINT -> EXPRESSION _currentIndex = _startTokenId()
+GoblinRareApepeYC.constructor.START_POINT -> EXPRESSION _name = name_
+----GoblinRareApepeYC, _startTokenId-----
+GoblinRareApepeYC._startTokenId.START_POINT -> RETURN 0
+----GoblinRareApepeYC, totalSupply-----
+GoblinRareApepeYC.totalSupply.START_POINT -> RETURN _currentIndex - _burnCounter - _startTokenId()
+----GoblinRareApepeYC, _totalMinted-----
+GoblinRareApepeYC._totalMinted.START_POINT -> RETURN _currentIndex - _startTokenId()
+----GoblinRareApepeYC, supportsInterface-----
+GoblinRareApepeYC.supportsInterface.START_POINT -> RETURN interfaceId == type()(IERC721).interfaceId || interfaceId == type()(IERC721Metadata).interfaceId || super.supportsInterface(interfaceId)
+----GoblinRareApepeYC, balanceOf-----
+GoblinRareApepeYC.balanceOf.START_POINT -> END_IF
+GoblinRareApepeYC.balanceOf.START_POINT -> IF owner == address(0)
+GoblinRareApepeYC.balanceOf.START_POINT -> RETURN uint256(_addressData[owner].balance)
+IF owner == address(0) -> EXPRESSION revert BalanceQueryForZeroAddress()()
+----GoblinRareApepeYC, _numberMinted-----
+GoblinRareApepeYC._numberMinted.START_POINT -> RETURN uint256(_addressData[owner].numberMinted)
+----GoblinRareApepeYC, _numberBurned-----
+GoblinRareApepeYC._numberBurned.START_POINT -> RETURN uint256(_addressData[owner].numberBurned)
+----GoblinRareApepeYC, _getAux-----
+GoblinRareApepeYC._getAux.START_POINT -> RETURN _addressData[owner].aux
+----GoblinRareApepeYC, _setAux-----
+GoblinRareApepeYC._setAux.START_POINT -> EXPRESSION _addressData[owner].aux = aux
+test IF ownership.addr != address(0) END_IF
+test IF ! ownership.burned END_IF
+test IF _startTokenId() <= curr && curr < _currentIndex NEW VARIABLE ownership = _ownerships[curr]
+test GoblinRareApepeYC._ownershipOf.START_POINT NEW VARIABLE curr = tokenId
+test GoblinRareApepeYC._ownershipOf.START_POINT GoblinRareApepeYC._ownershipOf.EXIT_POINT
+test IF ownership.addr != address(0) END_IF
+test IF _startTokenId() <= curr && curr < _currentIndex END_IF
+test IF ownership.addr != address(0) RETURN ownership
+test IF ownership.addr != address(0) RETURN ownership
+test IF ! ownership.burned IF ownership.addr != address(0)
+test IF_LOOP true END_LOOP
+test IF_LOOP true EXPRESSION curr --
+----GoblinRareApepeYC, _ownershipOf-----
+----GoblinRareApepeYC, ownerOf-----
+GoblinRareApepeYC.ownerOf.START_POINT -> RETURN _ownershipOf(tokenId).addr
+----GoblinRareApepeYC, name-----
+GoblinRareApepeYC.name.START_POINT -> RETURN _name
+----GoblinRareApepeYC, symbol-----
+GoblinRareApepeYC.symbol.START_POINT -> RETURN _symbol
+----GoblinRareApepeYC, tokenURI-----
+GoblinRareApepeYC.tokenURI.START_POINT -> END_IF
+IF bytes(baseURI).length != 0 -> RETURN 
+IF bytes(baseURI).length != 0 -> RETURN string(abi.encodePacked(baseURI,tokenId.toString()))
+GoblinRareApepeYC.tokenURI.START_POINT -> IF ! _exists(tokenId)
+GoblinRareApepeYC.tokenURI.START_POINT -> IF bytes(baseURI).length != 0
+GoblinRareApepeYC.tokenURI.START_POINT -> NEW VARIABLE baseURI = _baseURI()
+IF ! _exists(tokenId) -> EXPRESSION revert URIQueryForNonexistentToken()()
+----GoblinRareApepeYC, _baseURI-----
+GoblinRareApepeYC._baseURI.START_POINT -> RETURN 
+----GoblinRareApepeYC, approve-----
+IF to == owner -> EXPRESSION revert ApprovalToCurrentOwner()()
+IF _msgSender() != owner && ! isApprovedForAll(owner,_msgSender()) -> EXPRESSION revert ApprovalCallerNotOwnerNorApproved()()
+GoblinRareApepeYC.approve.START_POINT -> NEW VARIABLE owner = ERC721A.ownerOf(tokenId)
+GoblinRareApepeYC.approve.START_POINT -> END_IF
+GoblinRareApepeYC.approve.START_POINT -> EXPRESSION _approve(to,tokenId,owner)
+GoblinRareApepeYC.approve.START_POINT -> END_IF
+GoblinRareApepeYC.approve.START_POINT -> IF to == owner
+GoblinRareApepeYC.approve.START_POINT -> IF _msgSender() != owner && ! isApprovedForAll(owner,_msgSender())
+----GoblinRareApepeYC, getApproved-----
+GoblinRareApepeYC.getApproved.START_POINT -> END_IF
+GoblinRareApepeYC.getApproved.START_POINT -> RETURN _tokenApprovals[tokenId]
+GoblinRareApepeYC.getApproved.START_POINT -> IF ! _exists(tokenId)
+IF ! _exists(tokenId) -> EXPRESSION revert ApprovalQueryForNonexistentToken()()
+----GoblinRareApepeYC, setApprovalForAll-----
+IF operator == _msgSender() -> EXPRESSION revert ApproveToCaller()()
+GoblinRareApepeYC.setApprovalForAll.START_POINT -> IF operator == _msgSender()
+GoblinRareApepeYC.setApprovalForAll.START_POINT -> EXPRESSION ApprovalForAll(_msgSender(),operator,approved)
+GoblinRareApepeYC.setApprovalForAll.START_POINT -> EXPRESSION _operatorApprovals[_msgSender()][operator] = approved
+GoblinRareApepeYC.setApprovalForAll.START_POINT -> END_IF
+----GoblinRareApepeYC, isApprovedForAll-----
+GoblinRareApepeYC.isApprovedForAll.START_POINT -> RETURN _operatorApprovals[owner][operator]
+----GoblinRareApepeYC, transferFrom-----
+GoblinRareApepeYC.transferFrom.START_POINT -> EXPRESSION _transfer(from,to,tokenId)
+----GoblinRareApepeYC, safeTransferFrom-----
+GoblinRareApepeYC.safeTransferFrom.START_POINT -> EXPRESSION safeTransferFrom(from,to,tokenId,)
+----GoblinRareApepeYC, safeTransferFrom-----
+IF to.isContract() && ! _checkContractOnERC721Received(from,to,tokenId,_data) -> EXPRESSION revert TransferToNonERC721ReceiverImplementer()()
+GoblinRareApepeYC.safeTransferFrom.START_POINT -> EXPRESSION _transfer(from,to,tokenId)
+GoblinRareApepeYC.safeTransferFrom.START_POINT -> IF to.isContract() && ! _checkContractOnERC721Received(from,to,tokenId,_data)
+GoblinRareApepeYC.safeTransferFrom.START_POINT -> END_IF
+----GoblinRareApepeYC, _exists-----
+GoblinRareApepeYC._exists.START_POINT -> RETURN _startTokenId() <= tokenId && tokenId < _currentIndex && ! _ownerships[tokenId].burned
+----GoblinRareApepeYC, _safeMint-----
+GoblinRareApepeYC._safeMint.START_POINT -> EXPRESSION _safeMint(to,quantity,)
+----GoblinRareApepeYC, _safeMint-----
+GoblinRareApepeYC._safeMint.START_POINT -> EXPRESSION _mint(to,quantity,_data,true)
+test GoblinRareApepeYC._mint.START_POINT NEW VARIABLE startTokenId = _currentIndex
+test IF quantity == 0 EXPRESSION revert MintZeroQuantity()()
+test IF_LOOP updatedIndex != end END_LOOP
+test IF to == address(0) EXPRESSION revert MintToZeroAddress()()
+test IF safe && to.isContract() BEGIN_LOOP
+test IF_LOOP updatedIndex != end EXPRESSION Transfer(address(0),to,updatedIndex ++)
+test IF_LOOP updatedIndex != end END_LOOP
+test GoblinRareApepeYC._mint.START_POINT GoblinRareApepeYC._mint.EXIT_POINT
+test IF safe && to.isContract() BEGIN_LOOP
+test IF ! _checkContractOnERC721Received(address(0),to,updatedIndex ++,_data) EXPRESSION revert TransferToNonERC721ReceiverImplementer()()
+test IF_LOOP updatedIndex != end EXPRESSION Transfer(address(0),to,updatedIndex)
+----GoblinRareApepeYC, _mint-----
+IF _currentIndex != startTokenId -> EXPRESSION revert()()
+----GoblinRareApepeYC, _transfer-----
+GoblinRareApepeYC._transfer.START_POINT -> NEW VARIABLE isApprovedOrOwner = (_msgSender() == from || isApprovedForAll(from,_msgSender()) || getApproved(tokenId) == _msgSender())
+GoblinRareApepeYC._transfer.START_POINT -> IF prevOwnership.addr != from
+GoblinRareApepeYC._transfer.START_POINT -> IF nextSlot.addr == address(0)
+GoblinRareApepeYC._transfer.START_POINT -> EXPRESSION _afterTokenTransfers(from,to,tokenId,1)
+GoblinRareApepeYC._transfer.START_POINT -> END_IF
+GoblinRareApepeYC._transfer.START_POINT -> NEW VARIABLE prevOwnership = _ownershipOf(tokenId)
+GoblinRareApepeYC._transfer.START_POINT -> END_IF
+GoblinRareApepeYC._transfer.START_POINT -> NEW VARIABLE nextSlot = _ownerships[nextTokenId]
+IF ! isApprovedOrOwner -> EXPRESSION revert TransferCallerNotOwnerNorApproved()()
+IF nextSlot.addr == address(0) -> IF nextTokenId != _currentIndex
+GoblinRareApepeYC._transfer.START_POINT -> EXPRESSION _addressData[to].balance += 1
+GoblinRareApepeYC._transfer.START_POINT -> EXPRESSION currSlot.startTimestamp = uint64(block.timestamp)
+GoblinRareApepeYC._transfer.START_POINT -> EXPRESSION _addressData[from].balance -= 1
+GoblinRareApepeYC._transfer.START_POINT -> EXPRESSION currSlot.addr = to
+GoblinRareApepeYC._transfer.START_POINT -> NEW VARIABLE currSlot = _ownerships[tokenId]
+GoblinRareApepeYC._transfer.START_POINT -> NEW VARIABLE nextTokenId = tokenId + 1
+IF nextTokenId != _currentIndex -> EXPRESSION nextSlot.startTimestamp = prevOwnership.startTimestamp
+IF prevOwnership.addr != from -> EXPRESSION revert TransferFromIncorrectOwner()()
+GoblinRareApepeYC._transfer.START_POINT -> EXPRESSION _approve(address(0),tokenId,from)
+GoblinRareApepeYC._transfer.START_POINT -> IF ! isApprovedOrOwner
+GoblinRareApepeYC._transfer.START_POINT -> IF to == address(0)
+GoblinRareApepeYC._transfer.START_POINT -> EXPRESSION _beforeTokenTransfers(from,to,tokenId,1)
+IF nextTokenId != _currentIndex -> EXPRESSION nextSlot.addr = from
+GoblinRareApepeYC._transfer.START_POINT -> END_IF
+GoblinRareApepeYC._transfer.START_POINT -> END_IF
+GoblinRareApepeYC._transfer.START_POINT -> EXPRESSION Transfer(from,to,tokenId)
+IF to == address(0) -> EXPRESSION revert TransferToZeroAddress()()
+IF nextSlot.addr == address(0) -> END_IF
+----GoblinRareApepeYC, _burn-----
+GoblinRareApepeYC._burn.START_POINT -> EXPRESSION _burn(tokenId,false)
+----GoblinRareApepeYC, _burn-----
+GoblinRareApepeYC._burn.START_POINT -> EXPRESSION _beforeTokenTransfers(from,address(0),tokenId,1)
+GoblinRareApepeYC._burn.START_POINT -> NEW VARIABLE prevOwnership = _ownershipOf(tokenId)
+GoblinRareApepeYC._burn.START_POINT -> EXPRESSION currSlot.burned = true
+GoblinRareApepeYC._burn.START_POINT -> NEW VARIABLE from = prevOwnership.addr
+GoblinRareApepeYC._burn.START_POINT -> EXPRESSION addressData.numberBurned += 1
+GoblinRareApepeYC._burn.START_POINT -> IF approvalCheck
+IF nextSlot.addr == address(0) -> END_IF
+GoblinRareApepeYC._burn.START_POINT -> EXPRESSION currSlot.startTimestamp = uint64(block.timestamp)
+GoblinRareApepeYC._burn.START_POINT -> EXPRESSION _burnCounter ++
+GoblinRareApepeYC._burn.START_POINT -> EXPRESSION currSlot.addr = from
+GoblinRareApepeYC._burn.START_POINT -> NEW VARIABLE nextTokenId = tokenId + 1
+GoblinRareApepeYC._burn.START_POINT -> NEW VARIABLE currSlot = _ownerships[tokenId]
+GoblinRareApepeYC._burn.START_POINT -> IF nextSlot.addr == address(0)
+GoblinRareApepeYC._burn.START_POINT -> EXPRESSION _approve(address(0),tokenId,from)
+GoblinRareApepeYC._burn.START_POINT -> EXPRESSION addressData.balance -= 1
+GoblinRareApepeYC._burn.START_POINT -> END_IF
+GoblinRareApepeYC._burn.START_POINT -> NEW VARIABLE addressData = _addressData[from]
+GoblinRareApepeYC._burn.START_POINT -> EXPRESSION _afterTokenTransfers(from,address(0),tokenId,1)
+GoblinRareApepeYC._burn.START_POINT -> NEW VARIABLE nextSlot = _ownerships[nextTokenId]
+IF approvalCheck -> IF ! isApprovedOrOwner
+GoblinRareApepeYC._burn.START_POINT -> EXPRESSION Transfer(from,address(0),tokenId)
+IF approvalCheck -> END_IF
+GoblinRareApepeYC._burn.START_POINT -> END_IF
+IF nextSlot.addr == address(0) -> IF nextTokenId != _currentIndex
+IF ! isApprovedOrOwner -> EXPRESSION revert TransferCallerNotOwnerNorApproved()()
+IF nextTokenId != _currentIndex -> EXPRESSION nextSlot.startTimestamp = prevOwnership.startTimestamp
+IF approvalCheck -> NEW VARIABLE isApprovedOrOwner = (_msgSender() == from || isApprovedForAll(from,_msgSender()) || getApproved(tokenId) == _msgSender())
+IF nextTokenId != _currentIndex -> EXPRESSION nextSlot.addr = from
+----GoblinRareApepeYC, _approve-----
+GoblinRareApepeYC._approve.START_POINT -> EXPRESSION _tokenApprovals[tokenId] = to
+GoblinRareApepeYC._approve.START_POINT -> EXPRESSION Approval(owner,to,tokenId)
+----GoblinRareApepeYC, _checkContractOnERC721Received-----
+TRY IERC721Receiver(to).onERC721Received(_msgSender(),from,tokenId,_data) -> END_IF
+TRY IERC721Receiver(to).onERC721Received(_msgSender(),from,tokenId,_data) -> CATCH
+IF reason.length == 0 -> EXPRESSION revert(uint256,uint256)(32 + reason,mload(uint256)(reason))
+TRY IERC721Receiver(to).onERC721Received(_msgSender(),from,tokenId,_data) -> CATCH
+IF reason.length == 0 -> EXPRESSION revert TransferToNonERC721ReceiverImplementer()()
+GoblinRareApepeYC._checkContractOnERC721Received.START_POINT -> TRY IERC721Receiver(to).onERC721Received(_msgSender(),from,tokenId,_data)
+TRY IERC721Receiver(to).onERC721Received(_msgSender(),from,tokenId,_data) -> IF reason.length == 0
+IF reason.length == 0 -> INLINE ASM
+TRY IERC721Receiver(to).onERC721Received(_msgSender(),from,tokenId,_data) -> RETURN retval == IERC721Receiver(to).onERC721Received.selector
+----GoblinRareApepeYC, _beforeTokenTransfers-----
+----GoblinRareApepeYC, _afterTokenTransfers-----
+----GoblinRareApepeYC, supportsInterface-----
+GoblinRareApepeYC.supportsInterface.START_POINT -> RETURN interfaceId == type()(IERC165).interfaceId
+----GoblinRareApepeYC, constructor-----
+GoblinRareApepeYC.constructor.START_POINT -> EXPRESSION ERC721A(Goblin Rare Apepe YC,GBLNRAYC)
+GoblinRareApepeYC.constructor.START_POINT -> EXPRESSION setHiddenMetadataUri(_hiddenMetadataUri)
+----GoblinRareApepeYC, mint-----
+GoblinRareApepeYC.mint.START_POINT -> EXPRESSION require(bool,string)(msg.value >= cost * _mintAmount,Insufficient funds!)
+GoblinRareApepeYC.mint.START_POINT -> EXPRESSION _safeMint(_msgSender(),_mintAmount)
+IF totalSupply() >= freeSupply -> EXPRESSION require(bool,string)(msg.value > 0,Max free supply exceeded!)
+GoblinRareApepeYC.mint.START_POINT -> IF totalSupply() >= freeSupply
+GoblinRareApepeYC.mint.START_POINT -> EXPRESSION require(bool,string)(_mintAmount > 0 && _mintAmount <= maxMintAmountPerTx,Invalid mint amount!)
+GoblinRareApepeYC.mint.START_POINT -> EXPRESSION require(bool,string)(! paused,The contract is paused!)
+GoblinRareApepeYC.mint.START_POINT -> EXPRESSION nonReentrant()
+GoblinRareApepeYC.mint.START_POINT -> END_IF
+GoblinRareApepeYC.mint.START_POINT -> EXPRESSION require(bool,string)(totalSupply() + _mintAmount <= maxSupply,Max supply exceeded!)
+----GoblinRareApepeYC, mintForAddress-----
+GoblinRareApepeYC.mintForAddress.START_POINT -> EXPRESSION onlyOwner()
+GoblinRareApepeYC.mintForAddress.START_POINT -> EXPRESSION _safeMint(_receiver,_mintAmount)
+----GoblinRareApepeYC, _startTokenId-----
+GoblinRareApepeYC._startTokenId.START_POINT -> RETURN 1
+----GoblinRareApepeYC, setRevealed-----
+GoblinRareApepeYC.setRevealed.START_POINT -> EXPRESSION onlyOwner()
+GoblinRareApepeYC.setRevealed.START_POINT -> IF _state
+GoblinRareApepeYC.setRevealed.START_POINT -> END_IF
+IF _state -> EXPRESSION revealed = true
+IF _state -> EXPRESSION revealed = _state
+----GoblinRareApepeYC, setCost-----
+GoblinRareApepeYC.setCost.START_POINT -> EXPRESSION cost = _cost
+GoblinRareApepeYC.setCost.START_POINT -> EXPRESSION onlyOwner()
+----GoblinRareApepeYC, setMaxMintAmountPerTx-----
+GoblinRareApepeYC.setMaxMintAmountPerTx.START_POINT -> EXPRESSION maxMintAmountPerTx = _maxMintAmountPerTx
+GoblinRareApepeYC.setMaxMintAmountPerTx.START_POINT -> EXPRESSION onlyOwner()
+----GoblinRareApepeYC, setMaxSupply-----
+GoblinRareApepeYC.setMaxSupply.START_POINT -> EXPRESSION maxSupply = _maxSupply
+GoblinRareApepeYC.setMaxSupply.START_POINT -> EXPRESSION onlyOwner()
+----GoblinRareApepeYC, setFreeSupply-----
+GoblinRareApepeYC.setFreeSupply.START_POINT -> EXPRESSION freeSupply = _freeSupply
+GoblinRareApepeYC.setFreeSupply.START_POINT -> EXPRESSION onlyOwner()
+----GoblinRareApepeYC, setPaused-----
+GoblinRareApepeYC.setPaused.START_POINT -> EXPRESSION paused = _state
+GoblinRareApepeYC.setPaused.START_POINT -> EXPRESSION onlyOwner()
+----GoblinRareApepeYC, withdraw-----
+GoblinRareApepeYC.withdraw.START_POINT -> EXPRESSION require(bool)(os)
+GoblinRareApepeYC.withdraw.START_POINT -> EXPRESSION (os) = address(owner()).call{value: address(this).balance}()
+GoblinRareApepeYC.withdraw.START_POINT -> EXPRESSION nonReentrant()
+GoblinRareApepeYC.withdraw.START_POINT -> EXPRESSION onlyOwner()
+GoblinRareApepeYC.withdraw.START_POINT -> NEW VARIABLE os
+----GoblinRareApepeYC, setHiddenMetadataUri-----
+GoblinRareApepeYC.setHiddenMetadataUri.START_POINT -> EXPRESSION hiddenMetadataUri = _hiddenMetadataUri
+GoblinRareApepeYC.setHiddenMetadataUri.START_POINT -> EXPRESSION onlyOwner()
+----GoblinRareApepeYC, setBaseURI-----
+GoblinRareApepeYC.setBaseURI.START_POINT -> EXPRESSION onlyOwner()
+GoblinRareApepeYC.setBaseURI.START_POINT -> EXPRESSION _baseTokenURI = baseURI
+----GoblinRareApepeYC, _baseURI-----
+GoblinRareApepeYC._baseURI.START_POINT -> RETURN _baseTokenURI
+----GoblinRareApepeYC, tokenURI-----
+GoblinRareApepeYC.tokenURI.START_POINT -> IF revealed
+GoblinRareApepeYC.tokenURI.START_POINT -> EXPRESSION require(bool,string)(_exists(_tokenId),URI does not exist!)
+IF revealed -> RETURN hiddenMetadataUri
+IF revealed -> RETURN string(abi.encodePacked(_baseURI(),_tokenId.toString()))
+----GoblinRareApepeYC, nonReentrant-----
+GoblinRareApepeYC.nonReentrant.START_POINT -> EXPRESSION _status = _ENTERED
+GoblinRareApepeYC.nonReentrant.START_POINT -> _
+GoblinRareApepeYC.nonReentrant.START_POINT -> EXPRESSION require(bool,string)(_status != _ENTERED,ReentrancyGuard: reentrant call)
+GoblinRareApepeYC.nonReentrant.START_POINT -> EXPRESSION _status = _NOT_ENTERED
+----GoblinRareApepeYC, onlyOwner-----
+GoblinRareApepeYC.onlyOwner.START_POINT -> EXPRESSION require(bool,string)(owner() == _msgSender(),Ownable: caller is not the owner)
+GoblinRareApepeYC.onlyOwner.START_POINT -> _
